@@ -2,7 +2,7 @@ Operating Systems Lab
 
 Experiment 1
 Aim: Introduction to operating systems.
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 2
 Aim: Write a program to implement CPU scheduling First Come First Serve (FCFS)
 Code:
@@ -84,7 +84,7 @@ int main() {
     return 0;
 }
 
- 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 3
 Aim: Write a program to implement CPU scheduling for Shortest Job First.
 Code:
@@ -181,6 +181,7 @@ int main() {
     return 0;
 }
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Experiment 4
 Aim: Write a program to perform priority scheduling.
@@ -234,6 +235,8 @@ int main()
    cout<<" Avg. Turnaround time ="<<tt/n<<endl;
 }
 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 5
 Aim: Write a program to implement C.P.U scheduling for Round Robin.
 Code:
@@ -294,6 +297,9 @@ cout<<"Avg. waiting time: "<<wt*1.0/n
 <<"\tAvg. turn around time: "<<tat*1.0/n<<endl;
 return 0;
 }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Experiment 6
 Aim: Write a program to implement Reader-Writer problem using semaphores.
 Code:
@@ -370,6 +376,7 @@ int main()
 }
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 7
 Aim: Write a program to implement Producer Consumer problem using semaphores.
 Code:
@@ -428,6 +435,7 @@ int main()
     return 0;
 }
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 8
 Aim: Write a program for page replacement policy using LRU, FIFO and Optimal.
 Code:
@@ -619,10 +627,7 @@ int main() {
 }
 
 
-
-
-
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 9
 Aim: Write a program to implement Bankers Algorithm.
 Code:
@@ -710,9 +715,7 @@ int main()
 }
 
 
-
-
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Experiment 10
 Aim: Write a program for first fit, best fit, worst fit for memory management.
 Code:
