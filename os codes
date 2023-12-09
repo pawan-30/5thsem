@@ -1,0 +1,908 @@
+Operating Systems Lab
+
+Experiment 1
+Aim: Introduction to operating systems.
+
+Experiment 2
+Aim: Write a program to implement CPU scheduling First Come First Serve (FCFS)
+Code:
+#include <iostream>
+using namespace std;
+int main() {
+    int at[5], bt[5], wt[5], tat[5], p[5] = {0, 1, 2, 3, 4};
+    float avgwt = 0, avgtat = 0;
+    cout<<"Enter Arrival Time for the Processes : ";
+    for(int i = 0; i < 5; i++) {
+        cin>>at[i];
+    }
+    cout<<"Enter Burst Time for the Processes : ";
+    for(int i = 0; i < 5; i++) {
+        cin>>bt[i];
+    }
+    //Sorting according to Arrival Time
+    int atkey, btkey, pkey, j;
+    for(int i = 1; i < 5; i++) {
+      atkey = at[i];
+      btkey = bt[i];
+      pkey = p[i];
+      j = i;
+      while(j > 0 && at[j-1] > atkey) {
+         at[j] = at[j-1];
+         bt[j] = bt[j-1];
+         p[j] = p[j-1];
+         j--;
+      }
+      at[j] = atkey;
+      bt[j] = btkey;
+      p[j] = pkey;
+   }
+    //Calculation of Waiting Time
+    wt[p[0]] = 0; //Waiting Time for first process will be 0.
+    for(int i = 1; i < 5; i++) {
+        int temp = 0;
+        for(int j = 0; j < i; j++) {
+            temp += bt[j];
+        }
+        wt[p[i]] = temp - at[i];
+    }
+    //Calculation of Average Waiting Time
+    for(int i = 0; i < 5; i++){
+        avgwt += wt[i];
+    }
+    avgwt /=5;
+    //Calculation of Turn Around Time
+    for(int i = 0; i < 5; i++) {
+        tat[p[i]] = bt[i] + wt[p[i]];
+    }
+    //Calculation of Average Turn Around Time
+    for(int i = 0; i < 5; i++){
+        avgtat += tat[i];
+    }
+    avgtat /=5;
+    cout<<"Waiting Time : \n";
+    for(int i = 0; i < 5; i++) {
+        cout<<"P["<<p[i]+1<<"] \t";
+    }
+    cout<<"\n";
+    for(int i = 0; i < 5; i++) {
+        cout<<wt[p[i]]<<"\t\t";
+    }
+    cout<<"\n";
+    cout<<"Average Waiting Time = "<<avgwt;
+   
+    cout<<"\nTurn Around Time : \n";
+    for(int i = 0; i < 5; i++) {
+        cout<<"P["<<p[i]+1<<"] \t";
+    }
+    cout<<"\n";
+    for(int i = 0; i < 5; i++) {
+        cout<<tat[p[i]]<<"\t\t";
+    }
+    cout<<"\n";
+    cout<<"Average Turn Around Time = "<<avgtat;
+   
+    return 0;
+}
+
+ 
+Experiment 3
+Aim: Write a program to implement CPU scheduling for Shortest Job First.
+Code:
+#include <iostream>
+using namespace std;
+int main() {
+    int at[5], bt[5], wt[5], tat[5], p[5] = {0, 1, 2, 3, 4};
+    float avgwt = 0, avgtat = 0;
+    cout<<"Enter Arrival Time for the Processes - \n";
+    for(int i = 0; i < 5; i++) {
+        cout<<"P["<<i+1<<"] = ";
+        cin>>at[i];
+    }
+    cout<<"Enter Burst Time for the Processes - \n";
+    for(int i = 0; i < 5; i++) {
+        cout<<"P["<<i+1<<"] = ";
+        cin>>bt[i];
+    }
+    //Sorting according to Arrival Time
+    int atkey, btkey, pkey, j;
+    for(int i = 1; i < 5; i++) {
+      atkey = at[i];
+      btkey = bt[i];
+      pkey = p[i];
+      j = i;
+      while(j > 0 && at[j-1] > atkey) {
+         at[j] = at[j-1];
+         bt[j] = bt[j-1];
+         p[j] = p[j-1];
+         j--;
+      }
+      at[j] = atkey;
+      bt[j] = btkey;
+      p[j] = pkey;
+   }
+   for(int i = 2; i < 5; i++) {
+      btkey = bt[i];
+      atkey = at[i];
+      pkey = p[i];
+      j = i;
+      while(j > 1 && bt[j-1] > btkey) {
+         bt[j] = bt[j-1];
+         at[j] = at[j-1];
+         p[j] = p[j-1];
+         j--;
+      }
+      bt[j] = btkey;
+      at[j] = atkey;
+      p[j] = pkey;
+   }
+    //Calculation of Waiting Time
+    wt[p[0]] = 0; //Waiting Time for first process will be 0.
+    for(int i = 1; i < 5; i++) {
+        int temp = 0;
+        for(int j = 0; j < i; j++) {
+            temp += bt[j];
+        }
+        wt[p[i]] = temp - at[i] + at[0];
+    }
+    //Calculation of Average Waiting Time
+    for(int i = 0; i < 5; i++){
+        avgwt += wt[i];
+    }
+    avgwt /= 5;
+    //Calculation of Turn Around Time
+    for(int i = 0; i < 5; i++) {
+        tat[p[i]] = bt[i] + wt[p[i]];
+    }
+    //Calculation of Average Turn Around Time
+    for(int i = 0; i < 5; i++){
+        avgtat += tat[i];
+    }
+    avgtat /= 5;
+    cout<<"Waiting Time : \n";
+    for(int i = 0; i < 5; i++) {
+        cout<<"P["<<p[i]+1<<"] \t";
+    }
+    cout<<"\n";
+    for(int i = 0; i < 5; i++) {
+        cout<<wt[p[i]]<<"\t\t";
+    }
+    cout<<"\n";
+    cout<<"Average Waiting Time = "<<avgwt;
+    cout<<"\nTurn Around Time : \n";
+    for(int i = 0; i < 5; i++) {
+        cout<<"P["<<p[i]+1<<"] \t";
+    }
+    cout<<"\n";
+    for(int i = 0; i < 5; i++) {
+        cout<<tat[p[i]]<<"\t\t";
+    }
+    cout<<"\n";
+    cout<<"Average Turn Around Time = "<<avgtat;
+    return 0;
+}
+
+
+Experiment 4
+Aim: Write a program to perform priority scheduling.
+Code:
+#include<iostream>
+//Lower the no. higher the priority
+ using namespace std;
+int main()
+{
+    int a[10],b[10],x[10];
+    int waiting[10],turnaround[10],completion[10],p[10];
+    int i,j,smallest,count=0,time,n;
+    double avg=0,tt=0,end;
+    cout<<"\nEnter the number of Processes: ";
+    cin>>n;
+    cout<<"\nEnter arrival time of processes: ";
+    for(i=0;i<n;i++)  cin>>a[i];
+    cout<<"\nEnter burst time of processes: ";
+    for(i=0;i<n;i++)  cin>>b[i];
+    cout<<"\nEnter priority of processes: ";
+    for(i=0;i<n;i++)  cin>>p[i];
+    for(i=0; i<n; i++)  x[i]=b[i];
+    p[9]=-1;
+    for(time=0; count!=n; time++)
+    {
+        smallest=9;
+        for(i=0; i<n; i++)
+        {
+            if(a[i]<=time && p[i]>p[smallest] && b[i]>0 )
+                smallest=i;
+        }
+        b[smallest]--;
+
+        if(b[smallest]==0)
+        {
+            count++;
+            end=time+1;
+            completion[smallest] = end;
+            waiting[smallest] = end - a[smallest] - x[smallest];
+            turnaround[smallest] = end - a[smallest];
+        }
+    }
+     cout<<"Process"<<"\t"<< "Burst Time"<<"\t"<<"Arrival Time" <<"\t"<<"Waiting Time" <<"\t"<<"Turnaround time"<< "\t"<<"Completion time"<<"\t"<<"Priority"<<endl;
+    for(i=0; i<n; i++)
+    {
+         cout<<"p"<<i+1<<"\t    \t"<<x[i]<<"\t  \t"<<a[i]<<"\t  \t"<<waiting[i]<<"\t  \t"<<turnaround[i]<<"\t \t"<<completion[i]<<"\t \t"<<p[i]<<endl;
+        avg = avg + waiting[i];
+        tt = tt + turnaround[i];
+    }
+   cout<<"\n\nAvg. waiting time ="<<avg/n;
+   cout<<" Avg. Turnaround time ="<<tt/n<<endl;
+}
+
+Experiment 5
+Aim: Write a program to implement C.P.U scheduling for Round Robin.
+Code:
+#include <iostream>
+/*at = Arrival time,
+bt = Burst time,
+time_quantum= Quantum time
+tat = Turn around time,
+wt = Waiting time*/
+using namespace std;
+int main(){
+int i,n,time,remain,temps=0,time_quantum;
+int wt=0,tat=0;
+cout<<"Enter the total number of process: ";
+cin>>n;
+remain=n;
+int at[n];
+int bt[n];
+int rt[n];
+cout<<"Enter Arrival time, Burst time for all the processes:-"<<endl;
+for(i=0;i<n;i++)
+{
+cin>>at[i];
+cin>>bt[i];
+rt[i]=bt[i];
+}
+cout<<"Enter the value of time QUANTUM: ";
+cin>>time_quantum;
+cout<<"\n\nProcess\t:Turnaround Time:Waiting Time\n\n";
+for(time=0,i=0;remain!=0;)
+{
+if(rt[i]<=time_quantum && rt[i]>0)
+{
+time += rt[i];
+rt[i]=0;
+temps=1;
+}
+else if(rt[i]>0)
+{
+rt[i] -= time_quantum;
+time += time_quantum;
+}
+if(rt[i]==0 && temps==1)
+{
+remain--;
+//Desplaying the result of wating, turn around time:
+printf("Process{%d}\t:\t%d\t:\t%d\n",i+1,time-at[i],time-at[i]-bt[i]);
+cout<<endl;
+wt += time-at[i]-bt[i];
+tat += time-at[i];
+temps=0;
+}
+if(i == n-1) i=0;
+else if(at[i+1] <= time) i++;
+else i=0;
+}
+cout<<"Avg. waiting time: "<<wt*1.0/n
+<<"\tAvg. turn around time: "<<tat*1.0/n<<endl;
+return 0;
+}
+Experiment 6
+Aim: Write a program to implement Reader-Writer problem using semaphores.
+Code:
+#include <bits/stdc++.h>
+#include <semaphore.h>
+
+const int NUM_READERS = 5;
+const int NUM_WRITERS = 2;
+const int MAX_RUNS = 10; // Number of runs
+sem_t mutex, write_mutex;
+int read_count = 0;
+int runs = 0; // Counter for the number of runs
+void *reader(void *arg)
+{
+    int reader_id = *((int*)(&arg));
+    while (runs < MAX_RUNS)
+    {
+        sem_wait(&mutex);
+        read_count++;
+        if (read_count == 1) sem_wait(&write_mutex);
+        sem_post(&mutex);
+        // Read from the resource
+        std::cout << "Reader " << reader_id << " is reading" << std::endl;
+        sem_wait(&mutex);
+        read_count--;
+        if (read_count == 0) sem_post(&write_mutex);
+        sem_post(&mutex);
+        runs++;
+    }
+    return nullptr;
+}                                                                                                                                    
+void *writer(void *arg)
+{
+    int writer_id = *((int*)(&arg));
+    while (runs < MAX_RUNS)
+    {
+        sem_wait(&write_mutex);
+        // Write to the resource
+        std::cout << "Writer " << writer_id << " is writing" << std::endl;
+        sem_post(&write_mutex);
+        runs++;
+    }
+    return nullptr;
+}
+int main()
+{
+    sem_init(&mutex, 0, 1);
+    sem_init(&write_mutex, 0, 1);
+    pthread_t readerThreads[NUM_READERS];
+    pthread_t writerThreads[NUM_WRITERS];
+    int readerIds[NUM_READERS];
+    int writerIds[NUM_WRITERS];
+    for (int i = 0; i < NUM_READERS; i++)
+    {
+        readerIds[i] = i;
+        pthread_create(&readerThreads[i], nullptr, reader, &readerIds[i]);
+    }
+    for (int i = 0; i < NUM_WRITERS; i++)
+    {
+        writerIds[i] = i;
+        pthread_create(&writerThreads[i], nullptr, writer, &writerIds[i]);
+    }
+    for (int i = 0; i < NUM_READERS; i++)
+    {
+        pthread_join(readerThreads[i], nullptr);
+    }
+    for (int i = 0; i < NUM_WRITERS; i++)
+    {
+        pthread_join(writerThreads[i], nullptr);
+    }
+    sem_destroy(&mutex);
+    sem_destroy(&write_mutex);
+    return 0;
+}
+
+
+Experiment 7
+Aim: Write a program to implement Producer Consumer problem using semaphores.
+Code:
+#include<bits/stdc++.h>
+#include <semaphore.h>                                                                                        
+const int BUFFER_SIZE = 5;
+const int MAX_RUNS = 10; // Number of runs to stop after
+sem_t empty, full, mutex;
+std::vector<int> buffer;
+int runs = 0; // Counter for the number of runs
+void *producer(void *arg)
+{
+    int item = 1;
+    while (runs < MAX_RUNS)
+    {
+        sem_wait(&empty);
+        sem_wait(&mutex);
+        // Produce an item
+        buffer.push_back(item);
+        std::cout << "Produced: " << item << std::endl;
+        item++;
+        sem_post(&mutex);
+        sem_post(&full);
+        runs++;
+    }
+    return nullptr;
+}
+void *consumer(void *arg)
+{
+    while (runs < MAX_RUNS)
+    {
+        sem_wait(&full);
+        sem_wait(&mutex);
+        // Consume an item
+        int item = buffer.back();
+        buffer.pop_back();
+        std::cout << "Consumed: " << item << std::endl;
+        sem_post(&mutex);
+        sem_post(&empty);
+    }
+    return nullptr;
+}
+int main()
+{
+    sem_init(&empty, 0, BUFFER_SIZE);
+    sem_init(&full, 0, 0);
+    sem_init(&mutex, 0, 1);
+    pthread_t producerThread, consumerThread;
+    pthread_create(&producerThread, nullptr, producer, nullptr);
+    pthread_create(&consumerThread, nullptr, consumer, nullptr);
+    pthread_join(producerThread, nullptr);
+    pthread_join(consumerThread, nullptr);
+    sem_destroy(&empty);
+    sem_destroy(&full);
+    sem_destroy(&mutex);
+    return 0;
+}
+
+Experiment 8
+Aim: Write a program for page replacement policy using LRU, FIFO and Optimal.
+Code:
+#include<bits/stdc++.h>
+using namespace std;
+
+class FIFOPageReplacement {
+private:
+    queue<int> cache;                      // Queue to store the pages in the order they were referenced
+    unordered_set<int> pageTable;          // Set to check if a page is already present in the cache
+    int cacheSize;                         // Size of the cache
+ 
+public:
+    FIFOPageReplacement(int size) : cacheSize(size) {}
+ 
+    void referPage(int pageNum) {
+        if (pageTable.find(pageNum) == pageTable.end()) {
+            // Page not present in the cache
+            if (cache.size() == cacheSize) {
+                // Cache is full, need to remove the oldest page
+                int oldestPage = cache.front();
+                cache.pop();
+                pageTable.erase(oldestPage);
+            }
+        }
+        // Add the page to the cache and update the pageTable
+        cache.push(pageNum);
+        pageTable.insert(pageNum);
+    }
+    void displayCache() {
+        queue<int> tempCache = cache;
+        while (!tempCache.empty()) {
+            cout << tempCache.front() << " ";
+            tempCache.pop();
+        }
+        cout << endl;
+    }
+};
+class LRUPageReplacement {
+private:
+    list<int> cache;                    // List to maintain the order of pages
+    unordered_map<int, list<int>::iterator> pageTable;   // Hash table to store page numbers and their corresponding iterator in the list
+    int cacheSize;                       // Size of the cache
+ 
+public:
+    LRUPageReplacement(int size) : cacheSize(size) {}
+ 
+    void referPage(int pageNum) {
+        if (pageTable.find(pageNum) == pageTable.end()) {
+            // Page not present in the cache
+            if (cache.size() == cacheSize) {
+                // Cache is full, need to remove the least recently used page
+                int lastPage = cache.back();
+                cache.pop_back();
+                pageTable.erase(lastPage);
+            }
+        } else {
+            // Page already present in the cache, move it to the front
+            cache.erase(pageTable[pageNum]);
+        }
+        // Add the page to the front of the cache and update the pageTable
+        cache.push_front(pageNum);
+        pageTable[pageNum] = cache.begin();
+    }
+    void displayCache() {
+        for (auto page : cache) cout << page << " ";
+        cout << endl;
+    }
+};
+
+
+class OptimalPageReplacement {
+private:
+    vector<int> cache;                            // Vector to store the pages in the cache
+    unordered_map<int, int> pageTable;            // Hash table to store page numbers and their next occurrences
+    int cacheSize;                                // Size of the cache
+public:
+    OptimalPageReplacement(int size) : cacheSize(size) {}
+ 
+    void referPage(int pageNum) {
+        if (pageTable.find(pageNum) == pageTable.end()) {
+            // Page not present in the cache
+            if (cache.size() == cacheSize) {
+                // Cache is full, need to find the optimal page to replace
+                int optimalPage = findOptimalPage();
+                pageTable.erase(cache[optimalPage]);
+                cache[optimalPage] = pageNum;
+            }
+            else {
+                // Cache is not full, add the page to the cache
+                cache.push_back(pageNum);
+            }
+        }
+        // Update the next occurrence of the page in the pageTable
+        pageTable[pageNum] = findNextOccurrence(pageNum);
+    }
+    int findOptimalPage() {
+        int optimalPage = 0;
+        int farthestOccurrence = numeric_limits<int>::min();
+        for (int i = 0; i < cache.size(); i++) {
+            int page = cache[i];
+            if (pageTable[page] == -1) {
+                // Page will not occur again, so this is the optimal page to replace
+                return i;
+            }
+            if (pageTable[page] > farthestOccurrence) {
+                // Update the farthest occurrence and the optimal page
+                farthestOccurrence = pageTable[page];
+                optimalPage = i;
+            }
+        }
+        return optimalPage;
+    }
+    int findNextOccurrence(int pageNum) {
+        for (int i = 0; i < cache.size(); i++) {
+            if (cache[i] == pageNum) {
+                // Return the next occurrence of the page
+                return i;
+            }
+        }
+        // Page not found, return -1 to indicate that it will not occur again
+        return -1;
+    }
+    void displayCache() {
+        for (auto page : cache) {
+            cout << page << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    int cacheSize;
+    cout << "Enter the cache size: ";
+    cin >> cacheSize;
+    FIFOPageReplacement fifo(cacheSize);
+    OptimalPageReplacement optimal(cacheSize);
+    LRUPageReplacement lru(cacheSize);
+    int n;
+    cout<<"Enter the no. of pages: ";
+    cin>>n;
+    int pages[n];
+    cout<<"Enter the pages: ";
+    for(int i=0; i<n; i++) cin>>pages[i];
+    // int pages[] = {1, 3, 0, 3, 5, 6, 3};
+    // int n = sizeof(pages) / sizeof(pages[0]);
+    int choice=1;
+    while(choice != 4){
+        cout<<"Page Replacement policy:-\n'1' for FIFO\t'2' for Optimal\n'3' for LRU\t'4' for exit\nEnter your choice: ";
+        cin>>choice;
+        switch(choice){
+            case 1:{
+                cout<<"FIFO Page Replacement:-\n";
+                for (int i = 0; i < n; i++) {
+                    fifo.referPage(pages[i]);
+                    cout << "Page reference: " << pages[i] << "\tCache: ";
+                    fifo.displayCache();
+                }
+                break;
+            }
+            case 2:{
+                cout<<"Optimal Page Replacement:-\n";
+                for (int i = 0; i < n; i++) {
+                    optimal.referPage(pages[i]);
+                    cout << "Page reference: " << pages[i] << "\tCache: ";
+                    optimal.displayCache();
+                }
+                break;
+            }
+            case 3:{
+                cout<<"LRU Page Replacement:-\n";
+                for (int i = 0; i < n; i++) {
+                    lru.referPage(pages[i]);
+                    cout << "Page reference: " << pages[i] << "\tCache: ";
+                    lru.displayCache();
+                }
+                break;
+            }
+            case 4:{
+                cout<<"Exiting!";
+                exit(0);
+            }
+            default:
+                cout<<"Wrong input!\n";
+        }
+        
+    }
+    return 0;
+}
+
+
+
+
+
+
+Experiment 9
+Aim: Write a program to implement Bankers Algorithm.
+Code:
+#include <stdio.h>
+
+int main()
+{
+    /* array will store at most 5 process with 3 resoures if your process or
+    resources is greater than 5 and 3 then increase the size of array */
+    int p, c, count = 0, i, j, alc[5][3], max[5][3], need[5][3], safe[5], available[3], done[5], terminate = 0;
+    printf("Enter the number of process and resources: ");
+    scanf("%d %d", &p, &c);
+    // p is process and c is diffrent resources
+    printf("Enter allocation of resource of all process %dx%d matrix :-\n", p, c);
+    for (i = 0; i < p; i++)
+    {
+        for (j = 0; j < c; j++) scanf("%d", &alc[i][j]);
+    }
+    printf("Enter the max resource process required %dx%d matrix :-\n", p, c);
+    for (i = 0; i < p; i++)
+    {
+        for (j = 0; j < c; j++)
+        {
+            scanf("%d", &max[i][j]);
+        }
+    }
+    printf("Enter the  available resource: ");
+    for (i = 0; i < c; i++)
+        scanf("%d", &available[i]);
+
+    printf("\n Need resources matrix\n");
+    for (i = 0; i < p; i++)
+    {
+        for (j = 0; j < c; j++)
+        {
+            need[i][j] = max[i][j] - alc[i][j];
+            printf("%d\t", need[i][j]);
+        }
+        printf("\n");
+    }
+    /* once process execute variable done will stop them for again execution */
+    for (i = 0; i < p; i++) done[i] = 0;
+    while (count < p)
+    {
+        for (i = 0; i < p; i++)
+        {
+            if (done[i] == 0)
+            {
+                for (j = 0; j < c; j++)
+                {
+                    if (need[i][j] > available[j])  break;
+                }
+                // when need matrix is not greater then available matrix then if j==c will true
+                if (j == c)
+                {
+                    safe[count] = i;
+                    done[i] = 1;
+                    /* now process get execute release the resources and add them in available resources */
+                    for (j = 0; j < c; j++)
+                    {
+                        available[j] += alc[i][j];
+                    }
+                    count++;
+                    terminate = 0;
+                }
+                else terminate++;
+            }
+        }
+        if (terminate == (p - 1))
+        {
+            printf("Safe sequence does not exist");
+            break;
+        }
+    }
+    if (terminate != (p - 1))
+    {
+        printf("\nAvailable resource after completion\n");
+        for (i = 0; i < c; i++)  printf("%d\t", available[i]);
+        printf("\nSafe sequence are\n");
+        for (i = 0; i < p; i++)
+            printf("p%d\t", safe[i]);
+    }
+
+    return 0;
+}
+
+
+
+
+
+Experiment 10
+Aim: Write a program for first fit, best fit, worst fit for memory management.
+Code:
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// Function to allocate memory to 
+// blocks as per First fit algorithm s
+void firstFit(int blockSize[], int m, 
+            int processSize[], int n) 
+{ 
+    // Stores block id of the 
+    // block allocated to a process 
+    int allocation[n]; 
+
+    // Initially no block is assigned to any process 
+    memset(allocation, -1, sizeof(allocation)); 
+
+    // pick each process and find suitable blocks 
+    // according to its size ad assign to it 
+    for (int i = 0; i < n; i++) 
+    { 
+        for (int j = 0; j < m; j++) 
+        { 
+            if (blockSize[j] >= processSize[i]) 
+            { 
+                // allocate block j to p[i] process 
+                allocation[i] = j; 
+
+                // Reduce available memory in this block. 
+                blockSize[j] -= processSize[i]; 
+
+                break; 
+            } 
+        } 
+    } 
+
+    cout << "\nProcess No.\tProcess Size\tBlock no.\n"; 
+    for (int i = 0; i < n; i++) 
+    { 
+        cout << " " << i+1 << "\t\t"
+            << processSize[i] << "\t\t"; 
+        if (allocation[i] != -1) 
+            cout << allocation[i] + 1; 
+        else
+            cout << "Not Allocated"; 
+        cout << endl; 
+    } 
+}
+void bestFit(int blockSize[], int m, int processSize[], int n) 
+{ 
+    // Stores block id of the block allocated to a process 
+    int allocation[n]; 
+
+    // Initially no block is assigned to any process 
+    for (int i = 0; i < n; i++) 
+        allocation[i] = -1; 
+
+    // pick each process and find suitable blocks 
+    // according to its size ad assign to it 
+    for (int i = 0; i < n; i++) 
+    { 
+        // Find the best fit block for current process 
+        int bestIdx = -1; 
+        for (int j = 0; j < m; j++) 
+        { 
+            if (blockSize[j] >= processSize[i]) 
+            { 
+                if (bestIdx == -1) 
+                    bestIdx = j; 
+                else if (blockSize[bestIdx] > blockSize[j]) 
+                    bestIdx = j; 
+            } 
+        } 
+
+        // If we could find a block for current process 
+        if (bestIdx != -1) 
+        { 
+            // allocate block j to p[i] process 
+            allocation[i] = bestIdx; 
+
+            // Reduce available memory in this block. 
+            blockSize[bestIdx] -= processSize[i]; 
+        } 
+    } 
+
+    cout << "\nProcess No.\tProcess Size\tBlock no.\n"; 
+    for (int i = 0; i < n; i++) 
+    { 
+        cout << " " << i+1 << "\t\t" << processSize[i] << "\t\t"; 
+        if (allocation[i] != -1) 
+            cout << allocation[i] + 1; 
+        else
+            cout << "Not Allocated"; 
+        cout << endl; 
+    } 
+}
+void worstFit(int blockSize[], int m, int processSize[], int n) 
+{ 
+    // Stores block id of the block allocated to a 
+    // process 
+    int allocation[n]; 
+  
+    // Initially no block is assigned to any process 
+    memset(allocation, -1, sizeof(allocation)); 
+  
+    // pick each process and find suitable blocks 
+    // according to its size ad assign to it 
+    for (int i=0; i<n; i++) 
+    { 
+        // Find the best fit block for current process 
+        int wstIdx = -1; 
+        for (int j=0; j<m; j++) 
+        { 
+            if (blockSize[j] >= processSize[i]) 
+            { 
+                if (wstIdx == -1) 
+                    wstIdx = j; 
+                else if (blockSize[wstIdx] < blockSize[j]) 
+                    wstIdx = j; 
+            } 
+        } 
+  
+        // If we could find a block for current process 
+        if (wstIdx != -1) 
+        { 
+            // allocate block j to p[i] process 
+            allocation[i] = wstIdx; 
+  
+            // Reduce available memory in this block. 
+            blockSize[wstIdx] -= processSize[i]; 
+        } 
+    } 
+  
+    cout << "\nProcess No.\tProcess Size\tBlock no.\n"; 
+    for (int i = 0; i < n; i++) 
+    { 
+        cout << "   " << i+1 << "\t\t" << processSize[i] << "\t\t"; 
+        if (allocation[i] != -1) 
+            cout << allocation[i] + 1; 
+        else
+            cout << "Not Allocated"; 
+        cout << endl; 
+    } 
+} 
+
+// Driver code 
+int main() 
+{ 
+    // int blockSize[] = {100, 500, 200, 300, 600};
+    int m,n;
+    cout<<"Enter the no. of blocks: ";
+    cin>>m;
+    int blockSize[m];
+    cout<<"Enter the block sizes:-\n";
+    for(int i=0; i<m; i++) cin>>blockSize[i];
+    // int processSize[] = {212, 417, 112, 426}; 
+    cout<<"Enter the no. of Processes: ";
+    cin>>n;
+    int processSize[n];
+    cout<<"Enter the process sizes:-\n";
+    for(int i=0; i<n; i++) cin>>processSize[i];
+
+    int choice=1;
+    while(choice != 4){
+        cout<<"Memory Management Algorithm\n'1' for First fit\t'2' for Best fit\n'3' for Worst fit\t'4' for exit\nEnter your choice: ";
+        cin>>choice;
+        switch(choice){
+            case 1:{
+                cout<<"First Fit output:-\n";
+                firstFit(blockSize, m, processSize, n);
+                break;
+            }
+            case 2:{
+                cout<<"Best Fit output:-\n";
+                bestFit(blockSize, m, processSize, n);
+                break;
+            }
+            case 3:{
+                cout<<"Worst Fit output:-\n";
+                worstFit(blockSize, m, processSize, n);
+                break;
+            }
+            case 4:{
+                cout<<"Exiting!";
+                exit(0);
+            }
+            default:
+                cout<<"Wrong input!\n";
+        }
+    }
+    return 0 ; 
+}
